@@ -1,53 +1,46 @@
 # Hi, I'm Jonzelle Otieno
 
-Full-stack developer in Nairobi building practical web products with React, Next.js, TypeScript, and thoughtful product engineering.
+Full-stack developer based in Nairobi, Kenya, building sharp, reliable web products with React, Next.js, TypeScript, and thoughtful product engineering.
 
-I like dashboards, role-based workflows, clean interfaces, and apps that help teams understand what is happening without wrestling the software.
+I like turning messy workflows into clear dashboards, role-based tools, and product surfaces that help teams understand what is happening without fighting the software.
+
+Portfolio: [jonzelleotieno.vercel.app](https://jonzelleotieno.vercel.app)
+
+## What I Build
+
+- Front-end systems that stay tidy as products grow
+- Next.js apps with routing, data loading, metadata, and deployment polish
+- Dashboards for teams, projects, tasks, approvals, and workspace operations
+- API integrations with calm loading, empty, and error states
+- Role-based experiences for operators, managers, and individual contributors
+- Performance tuning and technical cleanup for codebases that need to move again
 
 ## Featured Work
 
 ### KaziFlow
 
-Team operations dashboard for workspaces, projects, tasks, members, Kanban, and calendar views.
+A neobrutalist team-operations dashboard for workspaces, members, projects, tasks, Kanban, and calendar views.
 
-- Next.js
-- React
-- TypeScript
-- Supabase
-- Prisma
-- Tailwind CSS
+`Next.js` `React` `TypeScript` `Supabase` `Prisma` `Tailwind CSS` `shadcn/Radix`
 
-Live: https://kaziflow-eta.vercel.app  
-Repo: https://github.com/JzTheBvckster/kaziflow
+Live: [kaziflow-eta.vercel.app](https://kaziflow-eta.vercel.app)  
+Repo: [github.com/JzTheBvckster/kaziflow](https://github.com/JzTheBvckster/kaziflow)
 
 ### Shenanigans
 
-Role-based enterprise management platform for Managing Directors, Project Managers, and Employees.
+A role-based enterprise management platform with Managing Director, Project Manager, and Employee workspaces.
 
-- JavaScript
-- Firebase Auth
-- Firestore
-- Serverless APIs
-- Vercel
+`JavaScript` `Firebase Auth` `Firestore` `Serverless APIs` `Vercel`
 
-Live: https://shenanigans10.vercel.app  
-Repo: https://github.com/JzTheBvckster/shenanigans
+Live: [shenanigans10.vercel.app](https://shenanigans10.vercel.app)  
+Repo: [github.com/JzTheBvckster/shenanigans](https://github.com/JzTheBvckster/shenanigans)
 
-## What I Build
+## Tech I Reach For
 
-- Front-end systems
-- Next.js apps
-- Design implementation
-- API integration
-- Performance tuning
-- Technical cleanup
-
-## Portfolio
-
-https://jonzelleotieno.vercel.app
+`React` `Next.js` `TypeScript` `JavaScript` `Supabase` `Prisma` `Firebase` `Firestore` `Vercel` `CSS` `Tailwind CSS`
 
 ## Contact
 
-- GitHub: https://github.com/JzTheBvckster
-- LinkedIn: https://www.linkedin.com/in/jonzelle-otieno-056a50385
-- Email: mailto:jonzelleotieno31@gmail.com
+- GitHub: [@JzTheBvckster](https://github.com/JzTheBvckster)
+- LinkedIn: [Jonzelle Otieno](https://www.linkedin.com/in/jonzelle-otieno-056a50385)
+- Email: [jonzelleotieno31@gmail.com](mailto:jonzelleotieno31@gmail.com)
