@@ -17,7 +17,7 @@ export function SiteHeader() {
   return (
     <header className="site-header app-header">
       <Link className="brand-mark" href="/" aria-label={`${profile.name} home`}>
-        JZ
+        {profile.name}
       </Link>
       <nav className="primary-nav" aria-label="Primary navigation">
         {navItems.map((item) => {

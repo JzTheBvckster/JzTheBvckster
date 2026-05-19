@@ -10,7 +10,7 @@ export default function WorkPage() {
   return (
     <main>
       <section
-        className="section-shell work-section route-section"
+        className="section-shell route-section"
         aria-labelledby="work-heading"
       >
         <div className="section-heading">

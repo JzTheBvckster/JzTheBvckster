@@ -8,6 +8,15 @@ async function screenshot(page, name) {
   await page.screenshot({ path: out(name), fullPage: true });
 }
 
+async function isBlockedCapture(page) {
+  const body = (await page.locator("body").innerText().catch(() => "")).toLowerCase();
+  return (
+    page.url().includes("/login") ||
+    (body.includes("login") && body.includes("password")) ||
+    body.includes("page not found")
+  );
+}
+
 (async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
@@ -20,7 +29,11 @@ async function screenshot(page, name) {
   await page.waitForLoadState("networkidle").catch(() => {});
   await page.waitForTimeout(2500);
 
-  await screenshot(page, "kaziflow-auth-landing.png");
+  if (await isBlockedCapture(page)) {
+    throw new Error(`KaziFlow login did not complete; current URL is ${page.url()}`);
+  }
+
+  await screenshot(page, "kaziflow-auth-dashboard.png");
 
   const links = await page.locator("a").evaluateAll((anchors) =>
     anchors.map((anchor) => ({
@@ -31,7 +44,7 @@ async function screenshot(page, name) {
   console.log(JSON.stringify({ currentUrl: page.url(), links }, null, 2));
 
   const routes = [
-    ["dashboard", "/dashboard"],
+    ["dashboard", "/"],
     ["projects", "/projects"],
     ["team", "/team"],
     ["settings", "/settings"],
@@ -41,7 +54,9 @@ async function screenshot(page, name) {
   const origin = "https://kaziflow-eta.vercel.app";
   for (const [name, route] of routes) {
     await page.goto(`${origin}${route}`, { waitUntil: "networkidle" }).catch(() => {});
-    await screenshot(page, `kaziflow-auth-${name}.png`);
+    if (!(await isBlockedCapture(page))) {
+      await screenshot(page, `kaziflow-auth-${name}.png`);
+    }
   }
 
   await browser.close();

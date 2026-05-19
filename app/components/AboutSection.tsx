@@ -1,30 +1,27 @@
-import { timeline } from "../data/portfolio";
+import { profile, timeline } from "../data/portfolio";
+import { TimelineList } from "./TimelineList";
 
 export function AboutSection() {
   return (
     <section className="section-shell about-section" id="about">
       <div className="about-panel">
         <p className="eyebrow">About</p>
-        <h2>I like interfaces that explain themselves.</h2>
+        <h2>{profile.name} builds web products that make complex work feel clear.</h2>
         <p>
-          My sweet spot is the space between product thinking and front-end
-          execution: taking ambiguous ideas, shaping the user flow, and
-          building the thing with enough care that it is easy to maintain
-          after launch.
+          I am a Nairobi-based full-stack developer focused on the space between
+          product thinking and dependable implementation: shaping operational
+          workflows, building the interface, and connecting it to application
+          logic that can hold up in real use.
+        </p>
+        <p>
+          Recent work includes authenticated dashboards, role-based workspaces,
+          project governance, task boards, team management, and settings
+          surfaces for products where permissions, hierarchy, and daily momentum
+          all need to be obvious.
         </p>
       </div>
 
-      <div className="timeline" aria-label="Experience timeline">
-        {timeline.map((item) => (
-          <article className="timeline-item" key={item.title}>
-            <span>{item.period}</span>
-            <div>
-              <h3>{item.title}</h3>
-              <p>{item.detail}</p>
-            </div>
-          </article>
-        ))}
-      </div>
+      <TimelineList items={timeline} />
     </section>
   );
 }

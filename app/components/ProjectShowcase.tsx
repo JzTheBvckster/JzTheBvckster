@@ -1,36 +1,31 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, ExternalLink, Github, Layers, Sparkles } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ExternalLink,
+  Github,
+  Layers,
+  Monitor,
+  Sparkles
+} from "lucide-react";
 import { useState } from "react";
-
-type ProjectScreenshot = {
-  src: string;
-  title: string;
-  caption: string;
-};
-
-export type ProjectShowcaseData = {
-  title: string;
-  repoUrl: string;
-  liveUrl: string;
-  screenshots: ProjectScreenshot[];
-  language: string;
-  summary: string;
-  highlights: string[];
-  stack: string[];
-  status: string;
-  demoNote?: string;
-  accent: "blue" | "yellow";
-};
+import type { Project } from "../data/portfolio";
 
 export function ProjectShowcase({
   projects
-}: Readonly<{ projects: ProjectShowcaseData[] }>) {
+}: Readonly<{ projects: Project[] }>) {
   const [activeProject, setActiveProject] = useState(0);
   const [activeShot, setActiveShot] = useState(0);
+  const [loadedScreenshots, setLoadedScreenshots] = useState<Record<string, boolean>>({});
   const project = projects[activeProject];
   const screenshot = project.screenshots[activeShot];
+  const isScreenshotLoaded = Boolean(loadedScreenshots[screenshot.src]);
+
+  const markScreenshotLoaded = (src: string) => {
+    setLoadedScreenshots((current) => ({ ...current, [src]: true }));
+  };
 
   const chooseProject = (index: number) => {
     setActiveProject(index);
@@ -41,25 +36,46 @@ export function ProjectShowcase({
     setActiveShot((current) => (current + 1) % project.screenshots.length);
   const previousShot = () =>
     setActiveShot((current) => (current - 1 + project.screenshots.length) % project.screenshots.length);
+  const nextProject = () => chooseProject((activeProject + 1) % projects.length);
+  const previousProject = () =>
+    chooseProject((activeProject - 1 + projects.length) % projects.length);
 
   return (
     <section className={`project-lab lab-${project.accent}`} aria-label="Interactive project showcase">
-      <div className="project-rail" role="tablist" aria-label="Choose project">
-        {projects.map((item, index) => (
-          <button
-            aria-controls="project-panel"
-            aria-selected={activeProject === index}
-            className={activeProject === index ? "is-active" : ""}
-            key={item.title}
-            onClick={() => chooseProject(index)}
-            role="tab"
-            type="button"
-          >
-            <span>0{index + 1}</span>
-            <strong>{item.title}</strong>
-            <small>{item.status}</small>
+      <div className="project-lab-header">
+        <div>
+          <p className="eyebrow">Project {activeProject + 1} of {projects.length}</p>
+          <h2>{project.title}</h2>
+        </div>
+
+        <div className="project-switch-controls" aria-label="Switch project">
+          <button type="button" onClick={previousProject} aria-label="Previous project">
+            <ArrowLeft size={18} aria-hidden="true" />
           </button>
-        ))}
+          <button type="button" onClick={nextProject} aria-label="Next project">
+            <ArrowRight size={18} aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+
+      <div className="project-rail-wrap">
+        <div className="project-rail" role="tablist" aria-label="Choose project">
+          {projects.map((item, index) => (
+            <button
+              aria-controls="project-panel"
+              aria-selected={activeProject === index}
+              className={activeProject === index ? "is-active" : ""}
+              key={item.title}
+              onClick={() => chooseProject(index)}
+              role="tab"
+              type="button"
+            >
+              <span>0{index + 1}</span>
+              <strong>{item.title}</strong>
+              <small>{item.status}</small>
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="project-stage" id="project-panel" role="tabpanel">
@@ -69,12 +85,23 @@ export function ProjectShowcase({
               <span />
               <span />
               <span />
-              <strong>{screenshot.title}</strong>
+              <strong>
+                <Monitor size={16} aria-hidden="true" />
+                {screenshot.title}
+              </strong>
             </div>
             <div className="screen-frame">
+              {!isScreenshotLoaded ? (
+                <div className="screen-loading" role="status" aria-live="polite">
+                  <span />
+                  <strong>Loading screenshot</strong>
+                </div>
+              ) : null}
               <Image
                 alt={`${project.title}: ${screenshot.title}`}
+                className={isScreenshotLoaded ? "is-loaded" : ""}
                 fill
+                onLoad={() => markScreenshotLoaded(screenshot.src)}
                 priority={activeProject === 0 && activeShot === 0}
                 sizes="(max-width: 900px) 90vw, 680px"
                 src={screenshot.src}
@@ -86,23 +113,27 @@ export function ProjectShowcase({
             <button type="button" onClick={previousShot} aria-label="Previous screenshot">
               <ArrowLeft size={20} aria-hidden="true" />
             </button>
-            <div>
-              <strong>{screenshot.title}</strong>
+            <figure>
+              <figcaption>
+                <strong>{screenshot.title}</strong>
+                <small>{activeShot + 1} / {project.screenshots.length}</small>
+              </figcaption>
               <span>{screenshot.caption}</span>
-            </div>
+            </figure>
             <button type="button" onClick={nextShot} aria-label="Next screenshot">
               <ArrowRight size={20} aria-hidden="true" />
             </button>
           </div>
 
-          <div className="shot-strip" aria-label={`${project.title} screenshots`}>
+          <div className="shot-strip" role="tablist" aria-label={`${project.title} screenshots`}>
             {project.screenshots.map((item, index) => (
               <button
+                aria-selected={activeShot === index}
                 aria-label={`Show ${item.title}`}
-                aria-pressed={activeShot === index}
                 className={activeShot === index ? "is-active" : ""}
                 key={item.src}
                 onClick={() => setActiveShot(index)}
+                role="tab"
                 type="button"
               >
                 <div className="thumbnail-frame">
@@ -119,8 +150,10 @@ export function ProjectShowcase({
             <Sparkles size={18} aria-hidden="true" />
             {project.status}
           </p>
-          <h3>{project.title}</h3>
-          <p>{project.summary}</p>
+          <div className="brief-title">
+            <h3>{project.title}</h3>
+            <p>{project.summary}</p>
+          </div>
           {project.demoNote ? <p className="demo-note">{project.demoNote}</p> : null}
 
           <div className="brief-grid">

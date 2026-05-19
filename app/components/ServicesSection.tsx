@@ -1,5 +1,5 @@
-import { BadgeCheck } from "lucide-react";
 import { services } from "../data/portfolio";
+import { ServiceList } from "./ServiceList";
 
 export function ServicesSection() {
   return (
@@ -8,14 +8,7 @@ export function ServicesSection() {
         <p className="eyebrow">What I do</p>
         <h2>Sharp execution from idea to interface.</h2>
       </div>
-      <div className="service-list">
-        {services.map((service) => (
-          <div className="service-pill" key={service}>
-            <BadgeCheck size={20} aria-hidden="true" />
-            {service}
-          </div>
-        ))}
-      </div>
+      <ServiceList services={services} />
     </section>
   );
 }

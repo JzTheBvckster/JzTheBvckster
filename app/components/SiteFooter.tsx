@@ -1,12 +1,39 @@
-import { Github, Linkedin, Mail, MapPin, MessageCircle, Zap } from "lucide-react";
+import Image from "next/image";
+import { Github, Linkedin, Mail, MapPin, Zap } from "lucide-react";
 import { profile } from "../data/portfolio";
+
+const socialLinks = [
+  {
+    label: "GitHub",
+    href: profile.github,
+    icon: <Github size={22} aria-hidden="true" />,
+    external: true
+  },
+  {
+    label: "LinkedIn",
+    href: profile.linkedin,
+    icon: <Linkedin size={22} aria-hidden="true" />,
+    external: true
+  },
+  {
+    label: "Email",
+    href: `mailto:${profile.email}`,
+    icon: <Mail size={22} aria-hidden="true" />
+  },
+  {
+    label: "WhatsApp",
+    href: `https://wa.me/${profile.whatsapp.replace(/\+/g, "")}`,
+    icon: <Image src="/social/whatsapp.svg" alt="" width={24} height={24} />,
+    external: true
+  }
+];
 
 export function SiteFooter() {
   return (
     <footer className="section-shell contact-band site-footer" aria-labelledby="footer-contact-heading">
       <div>
         <p className="eyebrow">Contact</p>
-        <h2 id="footer-contact-heading">Have a product idea that needs a strong web surface?</h2>
+        <h2 id="footer-contact-heading">Work with {profile.name} on a strong web surface.</h2>
         <p className="footer-contact-line">
           <MapPin size={18} aria-hidden="true" />
           {profile.location}
@@ -17,27 +44,21 @@ export function SiteFooter() {
           <Zap size={20} aria-hidden="true" />
           Start a conversation
         </a>
-        <a className="button button-secondary" href={profile.github} target="_blank" rel="noreferrer">
-          <Github size={20} aria-hidden="true" />
-          GitHub
-        </a>
-        <a className="button button-secondary" href={profile.linkedin} target="_blank" rel="noreferrer">
-          <Linkedin size={20} aria-hidden="true" />
-          LinkedIn
-        </a>
-        <a className="button button-secondary" href={`mailto:${profile.email}`}>
-          <Mail size={20} aria-hidden="true" />
-          Email
-        </a>
-        <a
-          className="button button-whatsapp"
-          href={`https://wa.me/${profile.whatsapp.replace(/\+/g, "")}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <MessageCircle size={20} aria-hidden="true" />
-          WhatsApp
-        </a>
+        <div className="social-icon-row">
+          {socialLinks.map((link) => (
+            <a
+              aria-label={link.label}
+              className="social-icon-link"
+              href={link.href}
+              key={link.label}
+              rel={link.external ? "noreferrer" : undefined}
+              target={link.external ? "_blank" : undefined}
+              title={link.label}
+            >
+              {link.icon}
+            </a>
+          ))}
+        </div>
       </div>
     </footer>
   );

@@ -1,27 +1,6 @@
-import { Github, Linkedin, Mail, MapPin, Sparkles, Terminal, ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, MapPin, Sparkles, Terminal } from "lucide-react";
 import { profile } from "../data/portfolio";
-
-function ExternalLink({
-  href,
-  children,
-  variant = "primary",
-}: Readonly<{
-  href: string;
-  children: React.ReactNode;
-  variant?: "primary" | "secondary";
-}>) {
-  return (
-    <a
-      className={`button button-${variant}`}
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-    >
-      {children}
-      <ArrowUpRight size={20} aria-hidden="true" />
-    </a>
-  );
-}
 
 export function HeroSection() {
   return (
@@ -33,38 +12,39 @@ export function HeroSection() {
         </p>
         <h1>I build loud, useful web products.</h1>
         <p className="hero-intro">{profile.intro}</p>
-
-        <div className="hero-actions" aria-label="Contact and social links">
-          <a
-            className="button button-primary"
-            href={`mailto:${profile.email}`}
-          >
-            <Mail size={20} aria-hidden="true" />
-            Email me
-          </a>
-          <ExternalLink href={profile.github} variant="secondary">
-            <Github size={20} aria-hidden="true" />
-            GitHub
-          </ExternalLink>
-          <ExternalLink href={profile.linkedin} variant="secondary">
-            <Linkedin size={20} aria-hidden="true" />
-            LinkedIn
-          </ExternalLink>
+        <div className="hero-actions" aria-label="Primary actions">
+          <Link href="/work" className="button button-primary">
+            View selected work
+            <ArrowRight size={20} aria-hidden="true" />
+          </Link>
+          <Link href="/services" className="button button-secondary">
+            See services
+          </Link>
         </div>
       </div>
 
       <aside className="hero-card" aria-label="Profile summary">
         <div className="avatar-block" aria-hidden="true">
-          <span>JZ</span>
+          <span>{profile.name}</span>
         </div>
         <div>
           <p className="eyebrow">{profile.role}</p>
-          <h2>React, Next.js, product craft.</h2>
+          <h2>{profile.name} builds with React, Next.js, and product craft.</h2>
         </div>
         <p className="location">
           <MapPin size={18} aria-hidden="true" />
           {profile.location}
         </p>
+        <dl className="hero-proof-list">
+          <div>
+            <dt>Focus</dt>
+            <dd>Dashboards, workflows, and role-based tools</dd>
+          </div>
+          <div>
+            <dt>Mode</dt>
+            <dd>Product thinking through shipped implementation</dd>
+          </div>
+        </dl>
         <div className="mini-terminal">
           <Terminal size={18} aria-hidden="true" />
           <code>npm run build-and-ship</code>

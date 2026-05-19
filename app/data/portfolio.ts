@@ -1,11 +1,41 @@
-import type { ProjectShowcaseData } from "../components/ProjectShowcase";
+export type ProjectScreenshot = {
+  src: string;
+  title: string;
+  caption: string;
+};
+
+export type Project = {
+  title: string;
+  repoUrl: string;
+  liveUrl: string;
+  screenshots: ProjectScreenshot[];
+  language: string;
+  summary: string;
+  highlights: string[];
+  stack: string[];
+  status: string;
+  demoNote?: string;
+  accent: "blue" | "yellow";
+};
+
+export type TimelineItem = {
+  period: string;
+  title: string;
+  detail: string;
+};
+
+export type ServiceDetail = {
+  title: string;
+  description: string;
+};
 
 export const profile = {
-  name: "JzTheBvckster",
+  name: "Jonzelle Otieno",
+  handle: "JzTheBvckster",
   role: "Full-stack developer",
   location: "Nairobi, Kenya",
   intro:
-    "I build sharp, reliable web experiences with React, Next.js, and thoughtful product engineering.",
+    "I am a Nairobi-based full-stack developer building sharp, reliable web products with React, Next.js, and thoughtful product engineering.",
   email: "jonzelleotieno31@gmail.com",
   github: "https://github.com/JzTheBvckster",
   linkedin: "https://www.linkedin.com/in/jonzelle-otieno-056a50385",
@@ -13,19 +43,19 @@ export const profile = {
 };
 
 export const stats = [
-  { value: "04+", label: "Years building" },
+  { value: "02+", label: "Years building" },
   { value: "03", label: "Featured apps" },
   { value: "99%", label: "Care for details" }
 ];
 
-export const projects: ProjectShowcaseData[] = [
+export const projects: Project[] = [
   {
     title: "KaziFlow",
     repoUrl: "https://github.com/JzTheBvckster/kaziflow",
     liveUrl: "https://kaziflow-eta.vercel.app",
     screenshots: [
       {
-        src: "/projects/kaziflow-auth-dashboard.png",
+        src: "/projects/kaziflow-dashboard-human.png",
         title: "Workspace dashboard",
         caption: "Authenticated demo workspace with task summary, distribution, and member metrics."
       },
@@ -116,32 +146,66 @@ export const projects: ProjectShowcaseData[] = [
   }
 ];
 
-export const services = [
-  "Front-end systems",
-  "Next.js apps",
-  "Design implementation",
-  "API integration",
-  "Performance tuning",
-  "Technical cleanup"
+export const serviceDetails: ServiceDetail[] = [
+  {
+    title: "Front-end systems",
+    description:
+      "Reusable components, page patterns, and interaction rules that keep the interface tidy even when the product starts growing extra limbs."
+  },
+  {
+    title: "Next.js apps",
+    description:
+      "Production-ready Next.js builds with routing, data loading, metadata, deployment polish, and the sturdy little decisions that keep the app from wobbling in public."
+  },
+  {
+    title: "Design implementation",
+    description:
+      "Pixel-aware translation from mockup to browser: spacing, responsive states, accessibility, and the visual rhythm that makes a screen feel intentional instead of improvised."
+  },
+  {
+    title: "API integration",
+    description:
+      "Clean connections to auth, databases, internal endpoints, and third-party tools, with loading, empty, and error states that stay calm when the network gets dramatic."
+  },
+  {
+    title: "Performance tuning",
+    description:
+      "Practical speed work across images, bundles, rendering, and interaction feedback, turning heavy pages into interfaces that move with a satisfying snap."
+  },
+  {
+    title: "Technical cleanup",
+    description:
+      "Refactors, bug hunts, dependency updates, and codebase housekeeping that make tomorrow's feature work feel less like archaeology and more like building."
+  }
 ];
 
-export const timeline = [
+export const services: string[] = serviceDetails.map((service) => service.title);
+
+export const timeline: TimelineItem[] = [
   {
     period: "Now",
     title: "Independent product engineer",
     detail:
-      "Building polished interfaces, practical dashboards, and web apps that feel fast from the first click."
+      "Building polished full-stack web apps with Next.js, React, TypeScript, Supabase, Prisma, Firebase, and serverless workflows for teams that need clarity around work, roles, and progress."
   },
   {
     period: "Before",
-    title: "React-focused developer",
+    title: "Operations-focused builder",
     detail:
-      "Delivered reusable components, improved UX flows, and partnered with teams to ship better product surfaces."
+      "Shaped dashboards for workspaces, projects, tasks, approvals, role-specific views, and the everyday systems teams use to coordinate work without losing context."
   },
   {
     period: "Always",
-    title: "Systems-minded maker",
+    title: "Detail-minded maker",
     detail:
-      "I care about clean architecture, accessible interaction, and the tiny details that keep software pleasant."
+      "Careful about interface clarity, maintainable architecture, accessible interaction, and the small details that keep software understandable after it ships."
   }
 ];
+
+export function getFeaturedServices(limit = 3) {
+  return services.slice(0, limit);
+}
+
+export function getRemainingServiceCount(featuredCount = 3) {
+  return Math.max(services.length - featuredCount, 0);
+}

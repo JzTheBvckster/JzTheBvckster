@@ -6,7 +6,7 @@ import { AboutSummary } from "./components/AboutSummary";
 
 export default function Home() {
   return (
-    <main>
+    <main className="home-page">
       <HeroSection />
       <StatsSection />
       <WorkSummary />
